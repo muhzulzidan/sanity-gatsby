@@ -1,0 +1,9 @@
+@import '../styles/custom-media.css';
+@import '../styles/custom-properties.css';
+
+
+.root{
+  display: flex;
+  background-color: var(--color-dark-gray);
+  color: var(--color-white);
+}
