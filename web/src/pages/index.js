@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState, useEffect, useRef } from "react";
+// eslint-disable-next-line no-unused-vars
+import React from "react";
 
 import ReactPlayer from "react-player/lazy";
 
@@ -10,7 +11,6 @@ import ReactFBLike from "react-fb-like";
 import Slider from "react-slick";
 
 import Container from "../components/container";
-import SEO from "../components/seo";
 import Layout from "../containers/layout";
 
 import Arrow from "../icons/arrow.svg";
@@ -19,292 +19,20 @@ import ArrowRounded from "../icons/arrowRound.svg";
 import ArrowSmall from "../icons/arrowSmall.svg";
 import ShareG from "../icons/shareG.svg";
 import Play from "../icons/play.svg";
+import Dots from "../icons/dots.svg";
+import Next from "../icons/next.svg";
+import Prev from "../icons/prev.svg";
+import Twitter from "../icons/twiter.svg";
+
+import people1 from "../images/people.png"
+import people2 from "../images/people-1.png"
 
 import * as styles from "../styles/pages/index.module.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 
-
-import styled from "styled-component";
-
-const SliderWrapper = styled("div")`
-  .slick-list {
-    overflow: ${props => (props.overflow ? "visible" : "hidden")};
-  }
-  /* Slider */
-  .slick-slider {
-    margin-bottom: 8px;
-
-    position: relative;
-
-    display: block;
-    box-sizing: border-box;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-
-    -webkit-touch-callout: none;
-    -khtml-user-select: none;
-    -ms-touch-action: pan-y;
-    touch-action: pan-y;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .slick-list {
-    position: relative;
-
-    display: block;
-    /* overflow: hidden; */
-
-    margin: 0;
-    padding: 0;
-  }
-  .slick-list:focus {
-    outline: none;
-  }
-  .slick-list.dragging {
-    cursor: pointer;
-    cursor: hand;
-  }
-
-  .slick-slider .slick-track,
-  .slick-slider .slick-list {
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0);
-    -o-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-
-  .slick-track {
-    position: relative;
-    top: 0;
-    left: 0;
-
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .slick-track:before,
-  .slick-track:after {
-    display: table;
-
-    content: "";
-  }
-  .slick-track:after {
-    clear: both;
-  }
-  .slick-loading .slick-track {
-    visibility: hidden;
-  }
-
-  .slick-slide {
-    display: none;
-    float: left;
-
-    height: 100%;
-    min-height: 1px;
-  }
-  [dir="rtl"] .slick-slide {
-    float: right;
-  }
-  .slick-slide img {
-    display: block;
-  }
-  .slick-slide.slick-loading img {
-    display: none;
-  }
-  .slick-slide.dragging img {
-    pointer-events: none;
-  }
-  .slick-initialized .slick-slide {
-    display: block;
-  }
-  .slick-loading .slick-slide {
-    visibility: hidden;
-  }
-  .slick-vertical .slick-slide {
-    display: block;
-
-    height: auto;
-
-    border: 1px solid transparent;
-  }
-  .slick-arrow.slick-hidden {
-    display: none;
-  }
-  /* Arrows */
-  .slick-prev,
-  .slick-next {
-    font-size: 0;
-    line-height: 0;
-
-    position: absolute;
-    top: 50%;
-
-    display: block;
-
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    -webkit-transform: translate(0, -50%);
-    -ms-transform: translate(0, -50%);
-    transform: translate(0, -50%);
-
-    cursor: pointer;
-
-    color: transparent;
-    border: none;
-    outline: none;
-    background: transparent;
-  }
-  .slick-prev:hover,
-  .slick-prev:focus,
-  .slick-next:hover,
-  .slick-next:focus {
-    color: transparent;
-    outline: none;
-    background: transparent;
-  }
-  .slick-prev:hover:before,
-  .slick-prev:focus:before,
-  .slick-next:hover:before,
-  .slick-next:focus:before {
-    opacity: 1;
-  }
-  .slick-prev.slick-disabled:before,
-  .slick-next.slick-disabled:before {
-    opacity: 0.25;
-  }
-
-  .slick-prev:before,
-  .slick-next:before {
-    font-family: "slick";
-    font-size: 20px;
-    line-height: 1;
-
-    opacity: 0.75;
-    color: white;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  .slick-prev {
-    left: -25px;
-  }
-  [dir="rtl"] .slick-prev {
-    right: -25px;
-    left: auto;
-  }
-  .slick-prev:before {
-    content: "←";
-  }
-  [dir="rtl"] .slick-prev:before {
-    content: "→";
-  }
-
-  .slick-next {
-    right: -25px;
-  }
-  [dir="rtl"] .slick-next {
-    right: auto;
-    left: -25px;
-  }
-  .slick-next:before {
-    content: "→";
-  }
-  [dir="rtl"] .slick-next:before {
-    content: "←";
-  }
-
-  /* Dots */
-  .slick-dotted.slick-slider {
-    margin-bottom: 30px;
-  }
-
-  .slick-dots {
-    position: absolute;
-    bottom: -10px;
-
-    display: block;
-
-    width: 100%;
-    padding: 0;
-    margin: 0;
-
-    list-style: none;
-
-    text-align: center;
-  }
-  .slick-dots li {
-    position: relative;
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin: 0 5px;
-    padding: 0;
-    cursor: pointer;
-    transition: width 0.3s ease-in-out;
-  }
-  .slick-dots li button {
-    font-size: 0;
-    line-height: 0;
-
-    display: block;
-
-    width: 10px;
-    height: 10px;
-    padding: 5px;
-
-    cursor: pointer;
-
-    color: transparent;
-    border: 0;
-    outline: none;
-    background: transparent;
-  }
-  .slick-dots li button:hover,
-  .slick-dots li button:focus {
-    outline: none;
-  }
-  .slick-dots li button:hover:before,
-  .slick-dots li button:focus:before {
-    opacity: 1;
-  }
-  .slick-dots li button:before {
-    font-family: "slick";
-    font-size: 6px;
-    line-height: 20px;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 10px;
-    height: 10px;
-
-    content: "•";
-    text-align: center;
-
-    opacity: 0.25;
-    color: black;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  .slick-dots li.slick-active button:before {
-    opacity: 0.75;
-    color: black;
-  }
-
-
-  }
-`;
-
-
+import styled from "styled-components";
+import Back from "../images/background.png";
 
 class Index extends React.Component {
   constructor(props) {
@@ -336,11 +64,129 @@ class Index extends React.Component {
       }
     };
 
+    const SliderWrapper = styled("div")`
+      .slick-list {
+        height: 100% !important;
+        width: 100% !important;
+        overflow: ${props => (props.overflow ? "visible" : "hidden")};
+      }
+      /* Slider */
+      .slick-slider {
+        margin-bottom: 8px;
+
+        position: relative;
+
+        display: block;
+        box-sizing: border-box;
+
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        -webkit-touch-callout: none;
+        -khtml-user-select: none;
+        -ms-touch-action: pan-y;
+        touch-action: pan-y;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .slick-slider .slick-list .slick-track .slick-current {
+        background-color: var(--color-white);
+        color: var(--color-accent);
+      }
+      .slick-slider .slick-list .slick-track .slick-current div {
+        background-color: var(--color-white);
+        color: var(--color-accent);
+      }
+      .slick-slider .slick-list .slick-track .slick-current button {
+        background-color: var(--color-white);
+        fill: var(--color-accent);
+      }
+      .slick-slider .slick-list .slick-track .slick-current svg {
+        fill: var(--color-accent);
+      }
+      .slick-list {
+        height: 21em;
+      }
+      .slick-list:focus {
+        outline: none;
+      }
+      .slick-list.dragging {
+        cursor: pointer;
+        cursor: hand;
+      }
+
+      .slick-slider .slick-track,
+      .slick-slider .slick-list {
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        -o-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+
+      .slick-track {
+        position: relative;
+        top: 0;
+        left: 0;
+
+        display: block;
+      }
+      .slick-track:before,
+      .slick-track:after {
+        display: table;
+
+        content: "";
+      }
+      .slick-track:after {
+        clear: both;
+      }
+      .slick-loading .slick-track {
+        visibility: hidden;
+      }
+
+      .slick-slide {
+        display: none;
+        float: left;
+
+        height: 100%;
+        min-height: 1px;
+      }
+      [dir="rtl"] .slick-slide {
+        float: right;
+      }
+      .slick-slide img {
+        display: block;
+      }
+      .slick-slide.slick-loading img {
+        display: none;
+      }
+      .slick-slide.dragging img {
+        pointer-events: none;
+      }
+      .slick-initialized .slick-slide {
+        display: block;
+      }
+      .slick-loading .slick-slide {
+        visibility: hidden;
+      }
+      .slick-vertical .slick-slide {
+        display: block;
+
+        height: auto;
+
+        border: 1px solid transparent;
+      }
+      .slick-arrow.slick-hidden {
+        display: none;
+      }
+    `;
+
     return (
       <Layout>
         <Arrow className={styles.arrow} />
         <Arrow className={styles.arrow2} />
-        <SEO />
+        {/* <SEO /> */}
         <Container>
           <div className={styles.root}>
             <h1>One Team. One Dream </h1>
@@ -506,56 +352,73 @@ class Index extends React.Component {
                 <ArrowSmall />
               </button>
 
-              <Slider {...settings} ref={c => (this.slider = c)} className={styles.slider}>
-                <div>
-                  <button>
-                    <Play />
-                  </button>
-                  <p>October 21, 2014</p>
-                  <h4>#AFCvHCFC: live audio on Arsenal Player</h4>
-                </div>
-                <div>
-                  <button>
-                    <Play />
-                  </button>
-                  <p>October 21, 2014</p>
-                  <h4>Roberto Di Matteo: My team was well organised</h4>
-                </div>
-                <div>
-                  <button>
-                    <Play />
-                  </button>
-                  <p>October 21, 2014</p>
-                  <h4>Blanc: 'The Stade de France is always special'</h4>
-                </div>
-                <div>
-                  <button>
-                    <Play />
-                  </button>
-                  <p>October 21, 2014</p>
-                  <h4>The internationals start back at training</h4>
-                </div>
-                <div>
-                  <button>
-                    <Play />
-                  </button>
-                  <p>October 21, 2014</p>
-                  <h4>The internationals start back at training</h4>
-                </div>
-                <div>
-                  <button>
-                    <Play />
-                  </button>
-                  <p>October 21, 2014</p>
-                  <h4>The internationals start back at training</h4>
-                </div>
-              </Slider>
+              <SliderWrapper>
+                <Slider {...settings} ref={c => (this.slider = c)} className={styles.slider}>
+                  <div className={styles.sliderItems}>
+                    <button>
+                      <Play />
+                    </button>
+                    <div className={styles.sliderClubs}>
+                      <p>October 21, 2014</p>
+                      <h4>#AFCvHCFC: live audio on Arsenal Player</h4>
+                    </div>
+                  </div>
+                  <div className={styles.sliderItems}>
+                    <button>
+                      <Play />
+                    </button>
+                    <div className={styles.sliderClubs}>
+                      <p>October 21, 2014</p>
+                      <h4>Roberto Di Matteo: My team was well organised</h4>
+                    </div>
+                  </div>
+                  <div className={styles.sliderItems}>
+                    <button>
+                      <Play />
+                    </button>
+                    <div className={styles.sliderClubs}>
+                      <p>October 21, 2014</p>
+                      <h4>Blanc: 'The Stade de France is always special'</h4>
+                    </div>
+                  </div>
+                  <div className={styles.sliderItems}>
+                    <button>
+                      <Play />
+                    </button>
+                    <div className={styles.sliderClubs}>
+                      <p>October 21, 2014</p>
+                      <h4>The internationals start back at training</h4>
+                    </div>
+                  </div>
+                  <div className={styles.sliderItems}>
+                    <button>
+                      <Play />
+                    </button>
+                    <div className={styles.sliderClubs}>
+                      <p>October 21, 2014</p>
+                      <h4>The internationals start back at training</h4>
+                    </div>
+                  </div>
+                  <div className={styles.sliderItems}>
+                    <button>
+                      <Play />
+                    </button>
+                    <div className={styles.sliderClubs}>
+                      <p>October 21, 2014</p>
+                      <h4>The internationals start back at training</h4>
+                    </div>
+                  </div>
+                </Slider>
+              </SliderWrapper>
               <button onClick={this.next} className={styles.next}>
                 <ArrowSmall />
               </button>
             </div>
             <div className={styles.videosContainer}>
-              <ReactPlayer url="https://www.youtube.com/watch?v=ysz5S6PUM-U" />
+              <ReactPlayer
+                url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                className={styles.player}
+              />
               <div className={styles.share}>
                 <ReactFBLike />
                 <div className={styles.google}>
@@ -569,6 +432,50 @@ class Index extends React.Component {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className={styles.div5}>
+          <h4>social</h4>
+          <div className={styles.hr}></div>
+          <img src={Back} alt="" className={styles.back} />
+          <div className={styles.content}>
+            <div className={styles.nav}>
+              <Prev className={styles.prevTesti} />
+              <Next className={styles.nextTesti}/>
+            </div>
+            <div className={styles.testi}>
+              <img src={people2} alt="" className={styles.img} />
+              <div className={styles.div1Testi}>
+                <h4>Jack Brown</h4>
+                <span>October 21, 2014</span>
+                <p className={styles.pTesti}>
+                  Wow, what an incredible round! didn’t imagine Totti had it in him, but I am happy
+                  I picked hi over lazy legs. Aeneanlorem bibendum auctor, nisi elit consequat
+                  ipsum, nec sem nibh id elit. Duis se odionibh vulputate cursus sit amet mauris.
+                </p>
+              </div>
+              <div className={styles.div2Testi}>
+                <h4>Preben Arentoft</h4>
+                <span>October 21, 2014</span>
+                <p className={styles.pTesti} >
+                  Yeah, that was amazing. Great job this round! gravida nibh vel velit auctor
+                  aliquet. Aeneanlorem bibendum auctor, nisi elit consequat ipsum, nec sem nibh id
+                  elit. Duis se odionibh vulputate cursus sit amet mauris. cursus sit amet mauris.
+                </p>
+              </div>
+              <img src={people1} alt="" className={styles.img} />
+            </div>
+
+          </div>
+          <Dots />
+        </div>
+        <div className={styles.div6}>
+          <Twitter />
+          <p>
+            @UOUApps This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor
+            aliquet. Aeneanlorem quis bibendum vulputate nibh sagittis sem nibh id elit. Duis sed
+            odionibh vulputate cursus a sit amet mauris.
+          </p>
         </div>
       </Layout>
     );

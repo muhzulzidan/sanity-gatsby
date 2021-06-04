@@ -4,6 +4,97 @@
 
 .root{
   display: flex;
+  flex-direction: column;
   background-color: var(--color-dark-gray);
   color: var(--color-white);
+  font-size: 12px;
+  & h4{
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+}
+
+.top{
+  padding-top: 4em;
+  display: flex;
+  justify-content: space-around;
+  & hr{
+    width: 90%;
+    margin: 0;
+    opacity: 0.5;
+  }
+}
+
+.top > div {
+  margin-right: 1em;
+}
+
+.about{
+  width: 20%;
+  & svg {
+    width: 10px;
+    height: 10px;
+    fill: var(--color-white);
+    margin-right: 1em;
+  }
+
+}
+.info, .support{
+  & ul {
+    list-style: none;
+    padding: 0px;
+    & li{
+
+    }
+  }
+}
+
+.gallery {
+  width: 23%;
+  & h4 {
+
+  }
+  & hr{
+    margin-bottom: 2em;
+  }
+  & img {
+    width: 82px;
+    height: 84px;
+    margin-right: 1em;
+    margin-bottom: 1em;
+  }
+}
+
+.sponsors{
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2em;
+  & h4{
+    display: flex;
+    justify-content: center;
+  }
+  & .div{
+    display: flex;
+    justify-content: center;
+
+    & div{
+      width: 140px;
+      height: 50px;
+      margin-right: 2em;
+      background-color:var(--color-white);
+      color: var(--color-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+.copyright{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:52px;
+  & p {
+    opacity: .5;
+  }
 }
